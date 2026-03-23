@@ -2,7 +2,7 @@ import { motion } from 'framer-motion'
 
 export default function Hero({ onShopClick }) {
   return (
-    <section className="relative min-h-screen flex flex-col justify-center items-center overflow-hidden bg-[#0a0a0a]">
+    <section className="relative min-h-screen pt-20 flex flex-col justify-center items-center overflow-hidden bg-[#0a0a0a]">
       
       {/* Background grid pattern */}
       <div className="absolute inset-0 opacity-[0.04]"
