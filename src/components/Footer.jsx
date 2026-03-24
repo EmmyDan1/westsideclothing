@@ -8,7 +8,7 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative bg-[#0a0a0a] border-t border-white/5 px-6 md:px-12 py-16 overflow-hidden">
+    <footer className="relative bg-[#0a0a0a] border-t border-white/5 px-12 md:px-12 py-16 overflow-hidden">
       {/* Background large text */}
       <div className="absolute bottom-0 left-0 right-0 flex justify-center pointer-events-none select-none overflow-hidden">
         <span className="font-display text-[clamp(4rem,18vw,14rem)] font-900 text-white/[0.03] leading-none whitespace-nowrap">
@@ -30,7 +30,7 @@ export default function Footer() {
             <p className="text-white/20 text-[10px] tracking-[0.4em] uppercase mb-3">
               Est. {year}
             </p>
-            <img src={Logo} alt="Westside Clothing" className="h-20 w-auto" />
+            <img src={Logo} alt="Westside Clothing" className="h-14 w-auto" />
           </motion.div>
 
           {/* Tagline + CTA */}
