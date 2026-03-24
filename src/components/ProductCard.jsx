@@ -24,7 +24,7 @@ export default function ProductCard({ product, onAddToCart }) {
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
       whileHover={{ y: -6 }}
-      className="group relative bg-[#111] border border-white/5 hover:border-white/15 transition-all duration-300"
+      className="group relative bg-[#111] border border-white/5 hover:border-white/15 transition-all duration-300 "
     >
       {/* Condition badge */}
       {product.condition && (
@@ -42,7 +42,7 @@ export default function ProductCard({ product, onAddToCart }) {
           transition={{ duration: 0.3 }}
           src={activeImage}
           alt={product.name}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 rounded-xl "
         />
       </div>
 
@@ -54,10 +54,10 @@ export default function ProductCard({ product, onAddToCart }) {
               key={i}
               onClick={() => setActiveImage(img)}
               className={`w-10 h-10 overflow-hidden border transition-all ${
-                activeImage === img ? 'border-white' : 'border-white/10 hover:border-white/30'
+                activeImage === img ? 'border-black' : 'border-white/10 hover:border-white/30'
               }`}
             >
-              <img src={img} alt="" className="w-full h-full object-cover" />
+              <img src={img} alt="" className="w-full h-full object-cover rounded-xl" />
             </button>
           ))}
         </div>

@@ -23,7 +23,7 @@ export default function Hero({ onShopClick }) {
           transition={{ duration: 0.6 }}
           className="text-xs tracking-[0.4em] uppercase text-white/40 mb-6 font-sans"
         >
-          Premium Thrift — Lagos
+         Quality thrift. Zero compromise.
         </motion.p>
 
         <motion.h1

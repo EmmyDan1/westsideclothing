@@ -4,6 +4,7 @@ import Hero from './components/Hero'
 import ProductGrid from './components/ProductGrid'
 import CartSummary from './components/CartSummary'
 import { useState } from 'react'
+import Footer from './components/Footer'
 console.log('URL:', import.meta.env.VITE_SUPABASE_URL)
 console.log('KEY:', import.meta.env.VITE_SUPABASE_ANON_KEY)
 export default function App() {
@@ -34,6 +35,7 @@ export default function App() {
         <ProductGrid onAddToCart={addToCart} />
       </div>
       <CartSummary cart={cart} onRemove={removeFromCart} />
+      <Footer />
     </main>
   )
 }
