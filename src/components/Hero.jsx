@@ -43,7 +43,7 @@ export default function Hero({ onShopClick }) {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="text-white/50 text-lg font-light max-w-md mx-auto mb-12 font-sans"
         >
-          Curated thrift pieces. Shoes, Jeans, T-shirts.
+         Hand picked thrift pieces. Shoes, Jeans, T-shirts.
           <br />All quality checked. All priced right.
         </motion.p>
 

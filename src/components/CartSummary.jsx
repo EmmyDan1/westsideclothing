@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ShoppingBag, X, MessageCircle } from 'lucide-react'
 
-const WHATSAPP_NUMBER = '234XXXXXXXXXX' // ← replace with your brother's number
+const WHATSAPP_NUMBER = '2349167194813' 
 
 export default function CartSummary({ cart, onRemove }) {
   const [open, setOpen] = useState(false)
