@@ -9,7 +9,7 @@ export async function fetchProducts() {
   const { data, error } = await supabase
     .from("products")
     .select(
-      "id, name, category, price, size, condition, main_image_url, thumbnails, is_sold",
+      "id, name, category, price, size, color, condition, main_image_url, thumbnails, is_sold",
     )
     .neq("is_sold", true)
     .not("condition", "eq", "Hidden")

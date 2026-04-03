@@ -1,6 +1,6 @@
-import { motion } from 'framer-motion'
-import { X } from 'lucide-react'
-import ImageUploader from './ImageUploader'
+import { motion } from "framer-motion";
+import { X } from "lucide-react";
+import ImageUploader from "./ImageUploader";
 
 export default function ProductForm({
   form,
@@ -25,7 +25,7 @@ export default function ProductForm({
       {/* Form header */}
       <div className="flex items-center justify-between mb-6">
         <h2 className="font-display text-xl font-semibold text-white">
-          {editingId ? 'Edit Product' : 'New Product'}
+          {editingId ? "Edit Product" : "New Product"}
         </h2>
         <button
           onClick={onCancel}
@@ -36,7 +36,6 @@ export default function ProductForm({
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-
         {/* Name */}
         <div className="md:col-span-2">
           <label className="text-white/40 text-[10px] tracking-widest uppercase block mb-2">
@@ -75,6 +74,19 @@ export default function ProductForm({
             placeholder="e.g. M, L, XL, 42"
             value={form.size}
             onChange={(e) => setForm({ ...form, size: e.target.value })}
+            className="w-full bg-white/5 border border-white/10 px-4 py-3 text-white placeholder-white/20 text-sm focus:outline-none focus:border-white/30 transition-colors"
+          />
+        </div>
+
+        <div>
+          <label className="text-white/40 text-[10px] tracking-widest uppercase block mb-2">
+            Color
+          </label>
+          <input
+            type="text"
+            placeholder="e.g. Black, Navy Blue, Olive"
+            value={form.color}
+            onChange={(e) => setForm({ ...form, color: e.target.value })}
             className="w-full bg-white/5 border border-white/10 px-4 py-3 text-white placeholder-white/20 text-sm focus:outline-none focus:border-white/30 transition-colors"
           />
         </div>
@@ -121,7 +133,7 @@ export default function ProductForm({
             uploading={uploadingMain}
             previews={form.main_image_url ? [form.main_image_url] : []}
             onUpload={onMainImageUpload}
-            onRemove={() => setForm({ ...form, main_image_url: '' })}
+            onRemove={() => setForm({ ...form, main_image_url: "" })}
           />
         </div>
 
@@ -142,12 +154,14 @@ export default function ProductForm({
           <button
             onClick={() => setForm({ ...form, is_sold: !form.is_sold })}
             className={`w-10 h-5 rounded-full transition-colors relative ${
-              form.is_sold ? 'bg-white' : 'bg-white/10'
+              form.is_sold ? "bg-white" : "bg-white/10"
             }`}
           >
-            <span className={`absolute top-0.5 w-4 h-4 rounded-full bg-black transition-all ${
-              form.is_sold ? 'left-5' : 'left-0.5'
-            }`} />
+            <span
+              className={`absolute top-0.5 w-4 h-4 rounded-full bg-black transition-all ${
+                form.is_sold ? "left-5" : "left-0.5"
+              }`}
+            />
           </button>
           <span className="text-white/40 text-xs tracking-widest uppercase">
             Mark as Sold
@@ -163,7 +177,11 @@ export default function ProductForm({
           disabled={submitting}
           className="flex-1 bg-white text-black py-3.5 text-xs font-semibold tracking-widest uppercase hover:bg-white/90 transition-colors disabled:opacity-50"
         >
-          {submitting ? 'Saving...' : editingId ? 'Update Product' : 'Add Product'}
+          {submitting
+            ? "Saving..."
+            : editingId
+              ? "Update Product"
+              : "Add Product"}
         </motion.button>
         <button
           onClick={onCancel}
@@ -173,5 +191,5 @@ export default function ProductForm({
         </button>
       </div>
     </motion.div>
-  )
+  );
 }

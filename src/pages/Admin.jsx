@@ -19,6 +19,7 @@ const EMPTY_FORM = {
   category: 'T-shirts',
   price: '',
   size: '',
+  color: '',
   condition: 'New',
   main_image_url: '',
   thumbnails: [],
