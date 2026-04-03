@@ -55,7 +55,7 @@ export default function Footer() {
                   backgroundColor: "rgba(255,255,255,0.1)",
                 }}
                 whileTap={{ scale: 0.95 }}
-                href="https://instagram.com/westsideclothing"
+                href="https://instagram.com/westsidethrift_"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 border border-white/10 px-4 py-2.5 text-white/50 hover:text-white transition-colors text-xs tracking-widest uppercase"
