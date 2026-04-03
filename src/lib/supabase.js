@@ -40,7 +40,7 @@ export async function uploadImage(file) {
   const { error } = await supabase.storage
     .from('products-images')
     .upload(fileName, file, { cacheControl: '3600', upsert: false })
-
+ console.log('Upload result:', data, error) 
   if (error) {
     console.error('Upload error:', error)
     return null
