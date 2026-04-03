@@ -1,40 +1,43 @@
-import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { ShoppingBag, Check, X, ChevronLeft, ChevronRight } from 'lucide-react'
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ShoppingBag, Check, X, ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function ProductCard({ product, onAddToCart }) {
-  const [activeImage, setActiveImage] = useState(product.main_image_url)
-  const [added, setAdded] = useState(false)
-  const [lightboxOpen, setLightboxOpen] = useState(false)
-  const [lightboxIndex, setLightboxIndex] = useState(0)
+  const [activeImage, setActiveImage] = useState(product.main_image_url);
+  const [added, setAdded] = useState(false);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
 
   // all images combined into one array
-  const allImages = [product.main_image_url, ...(product.thumbnails || [])].filter(Boolean)
+  const allImages = [
+    product.main_image_url,
+    ...(product.thumbnails || []),
+  ].filter(Boolean);
 
   const handleAdd = () => {
-    onAddToCart(product)
-    setAdded(true)
-    setTimeout(() => setAdded(false), 1800)
-  }
+    onAddToCart(product);
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1800);
+  };
 
   const openLightbox = (img) => {
-    const index = allImages.indexOf(img)
-    setLightboxIndex(index === -1 ? 0 : index)
-    setLightboxOpen(true)
-  }
+    const index = allImages.indexOf(img);
+    setLightboxIndex(index === -1 ? 0 : index);
+    setLightboxOpen(true);
+  };
 
   const prevImage = () => {
-    setLightboxIndex((prev) => (prev === 0 ? allImages.length - 1 : prev - 1))
-  }
+    setLightboxIndex((prev) => (prev === 0 ? allImages.length - 1 : prev - 1));
+  };
 
   const nextImage = () => {
-    setLightboxIndex((prev) => (prev === allImages.length - 1 ? 0 : prev + 1))
-  }
+    setLightboxIndex((prev) => (prev === allImages.length - 1 ? 0 : prev + 1));
+  };
 
   const conditionColor = {
-    'New': 'bg-white text-black',
-    'New Arrivals': 'bg-white/10 text-white border border-white/20',
-  }
+    New: "bg-white text-black",
+    "New Arrivals": "bg-white/10 text-white border border-white/20",
+  };
 
   return (
     <>
@@ -44,18 +47,20 @@ export default function ProductCard({ product, onAddToCart }) {
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
         whileHover={{ y: -6 }}
-        className="group relative bg-[#111] border border-white/5 hover:border-white/15 transition-all duration-300"
+        className="group relative bg-[#111] border border-white/5 hover:border-white/15 transition-all duration-300 rounded-2xl overflow-hidden"
       >
         {/* Condition badge */}
         {product.condition && (
-          <span className={`absolute top-3 left-3 z-10 text-[9px] tracking-widest uppercase font-semibold px-2 py-1 ${conditionColor[product.condition] || 'bg-white/10 text-white/60'}`}>
+          <span
+            className={`absolute top-3 left-3 z-10 text-[9px] tracking-widest uppercase font-semibold px-2 py-1 rounded-full ${conditionColor[product.condition] || "bg-white/10 text-white/60"}`}
+          >
             {product.condition}
           </span>
         )}
 
         {/* Main image — clickable */}
         <div
-          className="aspect-[3/4] overflow-hidden bg-[#161616] cursor-zoom-in"
+          className="aspect-[3/4] overflow-hidden bg-[#161616] cursor-zoom-in mx-2 mt-2 rounded-xl"
           onClick={() => openLightbox(activeImage)}
         >
           <motion.img
@@ -71,13 +76,15 @@ export default function ProductCard({ product, onAddToCart }) {
 
         {/* Thumbnails */}
         {allImages.length > 1 && (
-          <div className="flex gap-1 px-3 pt-3">
+          <div className="flex gap-1.5 px-3 pt-3">
             {allImages.slice(0, 4).map((img, i) => (
               <button
                 key={i}
                 onClick={() => setActiveImage(img)}
-                className={`w-10 h-10 overflow-hidden border transition-all ${
-                  activeImage === img ? 'border-white' : 'border-white/10 hover:border-white/30'
+                className={`w-10 h-10 overflow-hidden border rounded-lg transition-all ${
+                  activeImage === img
+                    ? "border-white"
+                    : "border-white/10 hover:border-white/30"
                 }`}
               >
                 <img src={img} alt="" className="w-full h-full object-cover" />
@@ -88,34 +95,43 @@ export default function ProductCard({ product, onAddToCart }) {
 
         {/* Info */}
         <div className="px-3 pt-3 pb-4">
-          <h3 className="text-white font-display text-base font-semibold leading-tight mb-1 truncate">
+          <h3 className="text-white font-display text-sm md:text-base font-semibold leading-tight mb-2 truncate">
             {product.name}
           </h3>
-          <div className="flex items-center justify-between mb-4">
-            <span className="text-white/90 font-sans font-semibold text-sm">
-              ₦{Number(product.price).toLocaleString()}
+
+          <span className="block text-white/90 font-sans font-semibold text-sm mb-1">
+            ₦{Number(product.price).toLocaleString()}
+          </span>
+
+          <div className="flex flex-col gap-0.5 mb-4">
+            <span className="text-white/30 text-[10px] tracking-widest uppercase">
+              Size: {product.size}
             </span>
-            <div className="flex gap-2 items-center">
-              <span className="text-white/30 text-xs tracking-widest uppercase">{product.size}</span>
-              {product.color && (
-                <span className="text-white/30 text-xs tracking-widest uppercase">· {product.color}</span>
-              )}
-            </div>
+            {product.color && (
+              <span className="text-white/30 text-[10px] tracking-widest uppercase">
+                Color: {product.color}
+              </span>
+            )}
           </div>
 
           <motion.button
             whileTap={{ scale: 0.97 }}
             onClick={handleAdd}
-            className={`w-full flex items-center justify-center gap-2 py-3 text-xs tracking-widest uppercase font-semibold transition-all duration-300 ${
+            className={`w-full flex items-center justify-center gap-2 py-2.5 text-[10px] tracking-widest uppercase font-semibold transition-all duration-300 rounded-xl ${
               added
-                ? 'bg-white/10 text-white/60 border border-white/10'
-                : 'bg-white text-black hover:bg-white/90'
+                ? "bg-white/10 text-white/60 border border-white/10"
+                : "bg-white text-black hover:bg-white/90"
             }`}
           >
-            {added
-              ? <><Check className="w-3 h-3" /> Added</>
-              : <><ShoppingBag className="w-3 h-3" /> Add to Cart</>
-            }
+            {added ? (
+              <>
+                <Check className="w-3 h-3" /> Added
+              </>
+            ) : (
+              <>
+                <ShoppingBag className="w-3 h-3" /> Add to Cart
+              </>
+            )}
           </motion.button>
         </div>
       </motion.div>
@@ -141,7 +157,10 @@ export default function ProductCard({ product, onAddToCart }) {
             {/* Prev button */}
             {allImages.length > 1 && (
               <button
-                onClick={(e) => { e.stopPropagation(); prevImage() }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  prevImage();
+                }}
                 className="absolute left-4 md:left-8 text-white/40 hover:text-white transition-colors z-10 p-2"
               >
                 <ChevronLeft className="w-8 h-8" />
@@ -164,7 +183,10 @@ export default function ProductCard({ product, onAddToCart }) {
             {/* Next button */}
             {allImages.length > 1 && (
               <button
-                onClick={(e) => { e.stopPropagation(); nextImage() }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  nextImage();
+                }}
                 className="absolute right-4 md:right-8 text-white/40 hover:text-white transition-colors z-10 p-2"
               >
                 <ChevronRight className="w-8 h-8" />
@@ -177,9 +199,12 @@ export default function ProductCard({ product, onAddToCart }) {
                 {allImages.map((_, i) => (
                   <button
                     key={i}
-                    onClick={(e) => { e.stopPropagation(); setLightboxIndex(i) }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setLightboxIndex(i);
+                    }}
                     className={`w-1.5 h-1.5 rounded-full transition-all ${
-                      i === lightboxIndex ? 'bg-white' : 'bg-white/20'
+                      i === lightboxIndex ? "bg-white" : "bg-white/20"
                     }`}
                   />
                 ))}
@@ -194,5 +219,5 @@ export default function ProductCard({ product, onAddToCart }) {
         )}
       </AnimatePresence>
     </>
-  )
+  );
 }
