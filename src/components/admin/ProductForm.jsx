@@ -89,9 +89,10 @@ export default function ProductForm({
             onChange={(e) => setForm({ ...form, category: e.target.value })}
             className="w-full bg-[#111] border border-white/10 px-4 py-3 text-white text-sm focus:outline-none focus:border-white/30 transition-colors"
           >
-            <option value="T-shirts">T-shirts</option>
-            <option value="Jeans">Jeans</option>
-            <option value="Shoes">Shoes</option>
+            <option value="T-shirts">T-SHIRTS</option>
+            <option value="Jeans">JEANS</option>
+            <option value="Shoes">SHOES</option>
+            <option value="new-arrivals">NEW ARRIVALS</option>
           </select>
         </div>
 
