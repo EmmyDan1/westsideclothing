@@ -1,13 +1,13 @@
-import { useRef } from 'react'
-import Navbar from './components/Navbar'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { useRef, useState } from 'react'
 import Hero from './components/Hero'
 import ProductGrid from './components/ProductGrid'
 import CartSummary from './components/CartSummary'
-import { useState } from 'react'
+import Navbar from './components/Navbar'
 import Footer from './components/Footer'
-console.log('URL:', import.meta.env.VITE_SUPABASE_URL)
-console.log('KEY:', import.meta.env.VITE_SUPABASE_ANON_KEY)
-export default function App() {
+import Admin from './pages/Admin'
+
+function HomePage() {
   const [cart, setCart] = useState([])
   const productsRef = useRef(null)
 
@@ -37,5 +37,16 @@ export default function App() {
       <CartSummary cart={cart} onRemove={removeFromCart} />
       <Footer />
     </main>
+  )
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/admin" element={<Admin />} />
+      </Routes>
+    </BrowserRouter>
   )
 }

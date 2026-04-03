@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Instagram, MessageCircle } from "lucide-react";
 import Logo from "/images/Logo.png";
 
-const WHATSAPP_NUMBER = "234XXXXXXXXXX"; // ← same number as CartSummary
+const WHATSAPP_NUMBER = '2349167194813' // ← same number as CartSummary
 
 export default function Footer() {
   const year = new Date().getFullYear();
