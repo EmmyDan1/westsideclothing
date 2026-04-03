@@ -38,7 +38,7 @@ export async function uploadImage(file) {
   const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`
 
   const { error } = await supabase.storage
-    .from('products-images')
+    .from('products-image')
     .upload(fileName, file, { cacheControl: '3600', upsert: false })
  console.log('Upload result:', data, error) 
   if (error) {
