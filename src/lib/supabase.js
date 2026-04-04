@@ -5,21 +5,20 @@ const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-export async function fetchProducts() {
+export async function fetchProducts(from = 0, limit = 12) {
   const { data, error } = await supabase
-    .from("products")
-    .select(
-      "id, name, category, price, size, color, condition, main_image_url, thumbnails, is_sold",
-    )
-    .neq("is_sold", true)
-    .not("condition", "eq", "Hidden")
-    .order("id", { ascending: false });
+    .from('products')
+    .select('id, name, category, price, size, color, condition, main_image_url, thumbnails, is_sold')
+    .neq('is_sold', true)
+    .not('condition', 'eq', 'Hidden')
+    .order('id', { ascending: false })
+    .range(from, from + limit - 1)
 
   if (error) {
-    console.error("Supabase fetch error:", error);
-    return [];
+    console.error('Supabase fetch error:', error)
+    return []
   }
-  return data;
+  return data
 }
 
 export async function fetchAllProducts() {
@@ -92,4 +91,9 @@ export async function deleteProduct(id) {
     return false;
   }
   return true;
+}
+
+export function getOptimizedUrl(url, width = 600) {
+  if (!url) return url
+  return `${url}?width=${width}&quality=75&format=webp`
 }

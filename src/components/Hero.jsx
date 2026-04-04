@@ -1,14 +1,21 @@
-import { motion } from 'framer-motion'
+import { useEffect } from "react";
 
-export default function Hero({ onShopClick }) {
+import { motion } from "framer-motion";
+
+export default function Hero({ onShopClick, onVisible }) {
+  useEffect(() => {
+    // Trigger after hero mounts so products start fetching
+    const timer = setTimeout(() => onVisible?.(), 800);
+    return () => clearTimeout(timer);
+  }, [onVisible]);
   return (
     <section className="relative min-h-screen pt-20 flex flex-col justify-center items-center overflow-hidden bg-[#0a0a0a]">
-      
       {/* Background grid pattern */}
-      <div className="absolute inset-0 opacity-[0.04]"
+      <div
+        className="absolute inset-0 opacity-[0.04]"
         style={{
           backgroundImage: `linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)`,
-          backgroundSize: '80px 80px'
+          backgroundSize: "80px 80px",
         }}
       />
 
@@ -16,14 +23,13 @@ export default function Hero({ onShopClick }) {
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-white opacity-[0.025] blur-[120px] pointer-events-none" />
 
       <div className="relative z-10 text-center px-6 max-w-5xl mx-auto">
-
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           className="text-xs tracking-[0.4em] uppercase text-white/40 mb-6 font-sans"
         >
-         Quality thrift. Zero compromise.
+          Quality thrift. Zero compromise.
         </motion.p>
 
         <motion.h1
@@ -43,8 +49,9 @@ export default function Hero({ onShopClick }) {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="text-white/50 text-lg font-light max-w-md mx-auto mb-12 font-sans"
         >
-         Hand picked thrift pieces. Shoes, Jeans, T-shirts.
-          <br />All quality checked. All priced right.
+          Hand picked thrift pieces. Shoes, Jeans, T-shirts.
+          <br />
+          All quality checked. All priced right.
         </motion.p>
 
         <motion.button
@@ -69,8 +76,10 @@ export default function Hero({ onShopClick }) {
         className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
       >
         <div className="w-px h-12 bg-gradient-to-b from-white/30 to-transparent" />
-        <span className="text-white/20 text-[10px] tracking-widest uppercase">Scroll</span>
+        <span className="text-white/20 text-[10px] tracking-widest uppercase">
+          Scroll
+        </span>
       </motion.div>
     </section>
-  )
+  );
 }

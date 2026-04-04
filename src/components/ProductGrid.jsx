@@ -5,21 +5,39 @@ import SearchBar from "./SearchBar";
 import CategoryFilter from "./CategoryFilter";
 import { motion } from "framer-motion";
 
+const LIMIT = 12;
+
 export default function ProductGrid({ onAddToCart }) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
 
+  const loadInitial = async () => {
+    setLoading(true);
+    const data = await fetchProducts(0, LIMIT);
+    setProducts(data);
+    setHasMore(data.length === LIMIT);
+    setLoading(false);
+  };
+
   useEffect(() => {
-    fetchProducts().then((data) => {
-      console.log("Products fetched:", data);
-      setProducts(data);
-      setLoading(false);
-    });
+    const load = async () => {
+      await loadInitial();
+    };
+    load();
   }, []);
 
-  // In ProductGrid.jsx, change the filter logic to:
+  const loadMore = async () => {
+    setLoadingMore(true);
+    const data = await fetchProducts(products.length, LIMIT);
+    setProducts((prev) => [...prev, ...data]);
+    setHasMore(data.length === LIMIT);
+    setLoadingMore(false);
+  };
+
   const filtered = products.filter((p) => {
     const matchSearch = p.name.toLowerCase().includes(search.toLowerCase());
     const matchCat =
@@ -52,7 +70,6 @@ export default function ProductGrid({ onAddToCart }) {
           All Pieces
         </motion.h2>
 
-        {/* Filters */}
         <div className="flex flex-col md:flex-row gap-4 md:items-center justify-between">
           <CategoryFilter active={category} onChange={setCategory} />
           <div className="w-full md:w-72">
@@ -65,7 +82,10 @@ export default function ProductGrid({ onAddToCart }) {
       {loading ? (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {[...Array(8)].map((_, i) => (
-            <div key={i} className="aspect-[3/4] bg-white/5 animate-pulse" />
+            <div
+              key={i}
+              className="aspect-[3/4] bg-white/5 animate-pulse rounded-2xl"
+            />
           ))}
         </div>
       ) : filtered.length === 0 ? (
@@ -73,15 +93,31 @@ export default function ProductGrid({ onAddToCart }) {
           No pieces found
         </div>
       ) : (
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          {filtered.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              onAddToCart={onAddToCart}
-            />
-          ))}
-        </div>
+        <>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {filtered.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                onAddToCart={onAddToCart}
+              />
+            ))}
+          </div>
+
+          {/* Load more */}
+          {hasMore && (
+            <div className="flex justify-center mt-12">
+              <motion.button
+                whileTap={{ scale: 0.97 }}
+                onClick={loadMore}
+                disabled={loadingMore}
+                className="border border-white/10 text-white/40 hover:text-white hover:border-white/30 px-10 py-3.5 text-xs tracking-widest uppercase transition-colors disabled:opacity-30"
+              >
+                {loadingMore ? "Loading..." : "Load More"}
+              </motion.button>
+            </div>
+          )}
+        </>
       )}
     </section>
   );

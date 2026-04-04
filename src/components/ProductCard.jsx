@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingBag, Check, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { getOptimizedUrl } from "../lib/supabase";
 
 export default function ProductCard({ product, onAddToCart }) {
   const [activeImage, setActiveImage] = useState(product.main_image_url);
@@ -42,11 +43,11 @@ export default function ProductCard({ product, onAddToCart }) {
   return (
     <>
       <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
-        whileHover={{ y: -6 }}
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true, margin: "50px" }}
+        transition={{ duration: 0.3 }}
+        whileHover={{ y: -4 }}
         className="group relative bg-[#111] border border-white/5 hover:border-white/15 transition-all duration-300 rounded-2xl overflow-hidden"
       >
         {/* Condition badge */}
@@ -68,8 +69,9 @@ export default function ProductCard({ product, onAddToCart }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.3 }}
-            src={activeImage}
+            src={getOptimizedUrl(activeImage, 600)}
             alt={product.name}
+            loading="lazy"
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
           />
         </div>
@@ -87,12 +89,16 @@ export default function ProductCard({ product, onAddToCart }) {
                     : "border-white/10 hover:border-white/30"
                 }`}
               >
-                <img src={img} alt="" className="w-full h-full object-cover" />
+                <img
+                  src={getOptimizedUrl(img, 100)}
+                  alt=""
+                  loading="lazy"
+                  className="w-full h-full object-cover"
+                />
               </button>
             ))}
           </div>
         )}
-
         {/* Info */}
         <div className="px-3 pt-3 pb-4">
           <h3 className="text-white font-display text-sm md:text-base font-semibold leading-tight mb-2 truncate">
@@ -174,7 +180,7 @@ export default function ProductCard({ product, onAddToCart }) {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              src={allImages[lightboxIndex]}
+              src={getOptimizedUrl(allImages[lightboxIndex], 1200)}
               alt={product.name}
               className="max-h-[85vh] max-w-[85vw] object-contain"
               onClick={(e) => e.stopPropagation()}

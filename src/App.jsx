@@ -1,14 +1,17 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { useRef, useState } from 'react'
+import { useRef, useState, lazy, Suspense } from 'react'
 import Hero from './components/Hero'
 import ProductGrid from './components/ProductGrid'
 import CartSummary from './components/CartSummary'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
-import Admin from './pages/Admin'
+
+// ← lazy load Admin, customers never download this code
+const Admin = lazy(() => import('./pages/Admin'))
 
 function HomePage() {
   const [cart, setCart] = useState([])
+  const [heroVisible, setHeroVisible] = useState(false)
   const productsRef = useRef(null)
 
   const scrollToProducts = () => {
@@ -30,9 +33,9 @@ function HomePage() {
   return (
     <main className="min-h-screen bg-[#0a0a0a]">
       <Navbar />
-      <Hero onShopClick={scrollToProducts} />
+      <Hero onShopClick={scrollToProducts} onVisible={() => setHeroVisible(true)} />
       <div ref={productsRef}>
-        <ProductGrid onAddToCart={addToCart} />
+        {heroVisible && <ProductGrid onAddToCart={addToCart} />}
       </div>
       <CartSummary cart={cart} onRemove={removeFromCart} />
       <Footer />
@@ -43,10 +46,16 @@ function HomePage() {
 export default function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/admin" element={<Admin />} />
-      </Routes>
+      <Suspense fallback={
+        <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
+          <div className="w-6 h-6 border border-white/20 border-t-white/60 rounded-full animate-spin" />
+        </div>
+      }>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/admin" element={<Admin />} />
+        </Routes>
+      </Suspense>
     </BrowserRouter>
   )
 }
