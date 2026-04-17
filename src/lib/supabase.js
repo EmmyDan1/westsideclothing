@@ -95,5 +95,5 @@ export async function deleteProduct(id) {
 
 export function getOptimizedUrl(url, width = 600) {
   if (!url) return url
-  return `${url}?width=${width}&quality=75&format=webp`
+  return url 
 }
